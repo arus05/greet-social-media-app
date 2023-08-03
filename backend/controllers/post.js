@@ -8,9 +8,8 @@ async function createPost(req, res) {
     const {
       userId,
       caption,
-      postImage,
     } = req.body
-  
+    const postImage = req.file?.filename 
     const user = await User.findById(userId)
 
     if (!user) {
@@ -103,7 +102,7 @@ async function likePost(req, res) {
 async function addCommentOnPost(req, res) {
   try {
     const { postId } = req.params
-    const { userId, content } = req.body
+    const { userId, body } = req.body
     const post = await Post.findById(postId)
 
     if (!post) {
@@ -114,7 +113,7 @@ async function addCommentOnPost(req, res) {
       $push: {
         comments: {
           user: new mongoose.Types.ObjectId(userId),
-          content
+          body
         }
       }
     }, { new: true })

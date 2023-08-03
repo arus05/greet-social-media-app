@@ -8,6 +8,10 @@ const {
   addCommentOnPost,
   deletePost
 } = require("../controllers/post.js")
+const requireAuth = require("../middleware/requireAuth.js")
+
+/** Authorization */
+router.use(requireAuth)
 
 /** READ */
 router.get("/", getAllPosts)
