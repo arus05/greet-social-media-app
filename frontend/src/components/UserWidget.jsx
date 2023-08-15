@@ -10,7 +10,7 @@ const UserWidget = ({ user }) => {
 
   async function addRemoveFriend() {
     setIsAddingRemovingFriend(true)
-    const res = await fetch(`/api/users/${currentUser._id}/${user._id}`, {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/users/${currentUser._id}/${user._id}`, {
       method: "PATCH",
       headers: {
         "Authorization": `Bearer ${token}`

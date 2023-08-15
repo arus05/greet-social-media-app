@@ -51,7 +51,7 @@ const Post = ({ post }) => {
   const deletePost = async () => {
     setIsDeletingPost(true)
     if (token) {
-      const res = await fetch(`/api/posts/${_id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/${_id}`, {
         method: "delete",
         headers: {
           "Authorization": `Bearer ${token}`
@@ -77,7 +77,7 @@ const Post = ({ post }) => {
 
     if (token) {
       dispatchPost({ type: "likePost", payload: { userId: user._id, } })
-      const res = await fetch(`/api/posts/${_id}/like`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/${_id}/like`, {
         method: "PATCH",
         body: JSON.stringify({
           userId: user._id
@@ -98,7 +98,7 @@ const Post = ({ post }) => {
   const addComment = async (e) => {
     e.preventDefault()
     setIsAddingComment(true)
-    const res = await fetch(`/api/posts/${_id}/comment`, {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/${_id}/comment`, {
       method: "PATCH",
       headers: {
         "Authorization": `Bearer ${token}`,

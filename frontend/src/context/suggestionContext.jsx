@@ -8,7 +8,7 @@ const SuggestionContextProvider = ({ children }) => {
   const { token } = useUserContext()
   useEffect(() => {
     const getSuggestions = async () => {
-      const res = await fetch("/api/users", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/users`, {
         method: "GET",
         headers: {
           "Authorization": `Bearer ${token}`

@@ -31,7 +31,7 @@ function App() {
     requireAuth("/login")
 
     const { userId } = params
-    const res = await fetch(`/api/users/${userId}`, {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/users/${userId}`, {
       method: "GET",
       headers: {
         "Authorization": `Bearer ${token}`

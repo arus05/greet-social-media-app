@@ -30,7 +30,7 @@ const CreatePost = () => {
     const formData = new FormData()
     formData.append("post-image", postImage)
     formData.append("caption", caption)
-    const res = await fetch("/api/posts", {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/posts`, {
       method: "post",
       headers: {
         "Authorization": `Bearer ${token}`

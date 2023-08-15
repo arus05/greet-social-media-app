@@ -55,8 +55,9 @@ const PostContextProvider = ({ children }) => {
   const { token } = useUserContext()
 
   useEffect(() => {
+    console.log(import.meta.env.VITE_API_URL)
     async function getPosts() {
-      const res = await fetch("/api/posts", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/posts`, {
         method: "GET",
         headers: {
           "Authorization": `Bearer ${token}`

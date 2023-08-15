@@ -5,7 +5,7 @@ import backgroundImg from "../assets/loginPageBG.jpg"
 export async function action({ request, dispatchUser }) {
   const formData = await request.formData()
   
-  const res = await fetch("/api/auth/login", {
+  const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
