@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema({
   },
   profilePicture: {
     type: String,
-    default: "defaultProfilePicture.jpg"
+    default: "https://firebasestorage.googleapis.com/v0/b/greet-social-media-app.appspot.com/o/profilePicture%2Fkyojuro%20rengoku2.png?alt=media&token=ad58908c-0dc6-4682-95e4-a8dd63610dc0"
   },
   location: {
     type: String,

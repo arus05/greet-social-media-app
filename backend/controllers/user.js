@@ -2,6 +2,15 @@ const mongoose = require("mongoose")
 const User = require("../models/User")
 
 // READ
+async function getUsers(req, res) {
+  try {
+    const users = await User.find().select({ password: 0 }).limit(10)
+    res.status(200).json(users)
+  } catch (err) {
+    res.status(404).json({ message: err.message })
+  }
+}
+
 async function getUser(req, res) {
   try {
     const { userId } = req.params
@@ -14,6 +23,7 @@ async function getUser(req, res) {
     res.status(404).json({ message: err.message })
   }
 }
+
 
 async function getUserFriends(req, res) {
   try {
@@ -109,6 +119,7 @@ async function deleteUser(req, res) {
 }
 
 module.exports = {
+  getUsers,
   getUser,
   getUserFriends,
   updateUser,

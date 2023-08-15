@@ -1,19 +1,43 @@
+const path = require("path")
 const mongoose = require("mongoose")
 const Post = require("../models/Post.js")
 const User = require("../models/User.js")
+const { getStorage, getDownloadURL } = require("firebase-admin/storage")
+const { json } = require("express")
 
 // CREATE
 async function createPost(req, res) {
   try {
     const {
-      userId,
       caption,
     } = req.body
-    const postImage = req.file?.filename 
+    const userId = req.user._id
+    let postImage = undefined
     const user = await User.findById(userId)
 
     if (!user) {
       throw new Error("User does not exist")
+    }
+
+    /** UPLOAD IMAGE TO FIREBASE */
+    if (req.file) {
+      /** CREATE A UNIQUE FILE NAME */
+      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+      const extension = path.extname(req.file.originalname)
+      const filename = `${req.file.fieldname}-${uniqueSuffix}${extension}`
+      
+      /** UPLOAD IMAGE TO FIREBASE */
+      const fileBuffer = req.file.buffer
+      const bucket = getStorage().bucket();
+      const fileRef = bucket.file(`postImage/${filename}`);
+
+      await fileRef.save(fileBuffer, {
+        metadata: {
+          contentType: req.file.mimetype,
+        },
+      });
+      
+      postImage = await getDownloadURL(fileRef)
     }
     
     const newPost = await Post.create({
@@ -32,10 +56,11 @@ async function createPost(req, res) {
       }
     })
 
-    const updatedPosts = await Post.find()
+    const updatedPosts = await Post.find().sort({ createdAt: -1 })
     res.status(201).json(updatedPosts)
 
   } catch (err) {
+    console.log(err.message)
     res.status(409).json({ message: err.message })
   }
 }
@@ -43,7 +68,7 @@ async function createPost(req, res) {
 // READ
 async function getAllPosts(req, res) {
   try {
-    const posts = await Post.find()
+    const posts = await Post.find().sort({ createdAt: -1 })
     res.status(200).json(posts)
   } catch (err) {
     res.status(404).json({ message: err.message })
@@ -53,7 +78,7 @@ async function getAllPosts(req, res) {
 async function getUserPosts(req, res) {
   try {
     const { userId } = req.params
-    const user = await User.findById(userId)
+    const user = await User.findById(userId).sort({ createdAt: -1 })
 
     if (!user) {
       throw new Error("Couldn't find user")
@@ -64,7 +89,7 @@ async function getUserPosts(req, res) {
       _id : {
         $in: postIds
       }
-    })
+    }).sort({ createdAt: -1 })
     res.status(200).json(posts)
   } catch (err) {
     res.status(404).json({ message: err.message })
@@ -95,6 +120,7 @@ async function likePost(req, res) {
 
     res.status(200).json(updatedPost)
   } catch (err) {
+    console.log(err.message)
     res.status(404).json({ message: err.message })
   }
 }
@@ -103,6 +129,7 @@ async function addCommentOnPost(req, res) {
   try {
     const { postId } = req.params
     const { userId, body } = req.body
+    const user = await User.findById(userId)
     const post = await Post.findById(postId)
 
     if (!post) {
@@ -113,6 +140,8 @@ async function addCommentOnPost(req, res) {
       $push: {
         comments: {
           user: new mongoose.Types.ObjectId(userId),
+          username: user.username,
+          profilePicture: user.profilePicture,
           body
         }
       }
@@ -127,13 +156,13 @@ async function addCommentOnPost(req, res) {
 // DELETE
 async function deletePost(req, res) {
   try {
-    /**
-     * check if authenticated user is owner of the post
-     */
+    const { postId } = req.params
+    /** AUTHORIZATION  */
+    if (!req.user.posts.find(post => post._id.toString() === postId)) {
+      return res.status(403).json({ message: "Permission denied" })
+    }
 
     /** DELETE POST */
-    const { postId } = req.params
-    console.log(postId)
     const post = await Post.findByIdAndDelete(postId)
 
     if (!post) {
@@ -147,6 +176,8 @@ async function deletePost(req, res) {
         posts: new mongoose.Types.ObjectId(postId)
       }
     })
+
+    /** DELETE ASSOCIATED POST IMAGE */
 
     res.status(200).json(post)
   } catch (err) {

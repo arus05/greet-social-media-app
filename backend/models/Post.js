@@ -28,7 +28,9 @@ const postSchema = new mongoose.Schema({
   },
   comments: [
     {
-      user: { type: ObjectId, ref: "User", required: true},
+      userId: { type: ObjectId, ref: "User", required: true },
+      username: { type: String, required: true },
+      profilePicture: { type: String },
       body: { type: String, required: true },
       createdAt: { type: Date, default: Date.now }
     }

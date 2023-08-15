@@ -1,5 +1,6 @@
 /** IMPORTS */
-const dotenv = require("dotenv")
+require("dotenv").config()
+const cors = require("cors")
 const express = require("express")
 const multer = require("multer")
 const path = require("path")
@@ -10,27 +11,28 @@ const postRoutes = require("./routes/post.js")
 const { createPost } = require("./controllers/post.js")
 const { signup } = require("./controllers/auth.js")
 const requireAuth = require("./middleware/requireAuth.js")
+const { initializeApp, cert } = require('firebase-admin/app');
+const serviceAccount = require(process.env.FIREBASE_KEY_PATH)
 
 /** CONFIGURATIONS */
-dotenv.config()
 const app = express()
+app.use(cors({
+  origin: "http://localhost:5173",
+  methods: "GET,POST,PUT,DELETE",
+  allowedHeaders: "Content-Type, Authorization",
+}))
 app.use(express.json()) // parse application/json
 app.use(express.urlencoded({ extended: true })) // parse application/x-www-form-urlencoded
-app.use("/assets", express.static(`${__dirname}/public/assets`))
+// app.use("/assets", express.static(`${__dirname}/public/assets`))
+initializeApp({
+  credential: cert(serviceAccount),
+  storageBucket: 'greet-social-media-app.appspot.com',
+});
 
 /** FILE STORAGE */
-const maxFileSize = 2E7
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "./public/assets")
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-    const extension = path.extname(file.originalname)
-    cb(null, `${file.fieldname}-${uniqueSuffix}${extension}`)
-  }
-}, { timestamps: true })
+const maxFileSize = 5 * 1024 * 1024
 
+const storage = multer.memoryStorage()
 const upload = multer({ storage, limits: { fileSize: maxFileSize } })
 
 /** ROUTES WITH FILES */
@@ -55,7 +57,3 @@ connectDb(DB_URI)
   .catch(err => {
     console.log(err)
   })
-
-
-
-

@@ -1,69 +1,122 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800&display=swap');
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+/* Change Autocomplete styles in Chrome*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  border: none;
+  -webkit-text-fill-color: inherit !important;
+  -webkit-box-shadow: none;
+  transition: background-color 5000s ease-in-out 0s !important;
 }
 
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+@layer components {
+  .img-fit {
+    @apply w-full h-full object-cover
   }
-  a:hover {
-    color: #747bff;
+
+  .profile-pic-wrapper {
+    @apply h-10 w-10 rounded-full overflow-hidden
   }
-  button {
-    background-color: #f9f9f9;
+
+  .flex-center {
+    @apply flex items-center
   }
+
+  .abstract {
+    @apply bg-gradient-to-r from-blue-900 via-blue-800 to-blue-700
+  }
+
+  .btn {
+    @apply bg-gradient-to-r from-blue-900 via-blue-800 to-blue-700 hover:opacity-75
+  }
+
+  .border-light {
+    @apply border-2 border-gray-100
+  }
+
+  .border-dark {
+    @apply border-2 border-white
+  }
+
+  .nav-li {
+    @apply flex-center gap-2 p-2 rounded-2xl sm:hover:bg-bg-hover sm:dark:hover:bg-bg-hover-dark sm:hover:text-text-hover sm:dark:hover:text-text-hover-dark
+  }
+
+  .nav-icon {
+    @apply h-7 w-7 sm:h-6 sm:w-6 xl:h-7 xl:w-7 text-secondary 
+  }
+
+  .profile-nav-li {
+    @apply sm:hover:bg-[rgba(136,207,238,0.75)]
+  }
+
+  .profile-nav-text {
+    @apply px-4 py-2 sm:hover:translate-x-5 transition duration-300 ease-out
+  }
+
+  .create-post-li {
+    @apply text-sm
+  }
+
+  .create-post-btn {
+    @apply flex-center gap-1
+  }
+
+  .create-post-icon {
+    @apply h-5 w-5
+  }
+
+  .drop-down {
+    @apply bg-primary dark:bg-primary-dark
+    text-text dark:text-text-dark shadow-lg shadow-gray-400 dark:border-2 border-primary-dark 
+    dark:border-primary
+  }
+
+  .post-icon {
+    @apply h-6 w-6 sm:h-6 sm:w-6 xl:h-7 xl:w-7 text-text dark:text-text-dark 
+  }
+
+  .input-container {
+    @apply flex-center gap-3 border-4 rounded-lg px-5 py-2 mb-3 border-accent
+  }
+
+}
+
+@layer base {
+  * {
+    @apply box-border
+  }
+
+  input {
+    @apply focus:outline-none placeholder:text-gray-400 bg-transparent
+           dark:placeholder:text-white
+  }
+
+  select {
+    @apply focus:outline-none bg-transparent
+  }
+
+  ::-webkit-scrollbar {
+    @apply w-[0px]
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-primary-dark rounded-md 
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-md bg-primary-dark
+  }
+
 }

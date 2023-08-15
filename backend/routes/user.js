@@ -1,6 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const {
+  getUsers,
   getUser,
   getUserFriends,
   updateUser,
@@ -13,6 +14,7 @@ const requireAuth = require("../middleware/requireAuth.js")
 router.use(requireAuth)
 
 /** READ */
+router.get("/", getUsers)
 router.get("/:userId", getUser)
 router.get("/:userId/friends", getUserFriends)
 
