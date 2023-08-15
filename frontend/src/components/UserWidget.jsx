@@ -29,7 +29,7 @@ const UserWidget = ({ user }) => {
   }
 
   return (
-    <div className="flex-center gap-5 bg-transparent">
+    <div className="flex-center gap-5 bg-transparent flex-wrap">
       <Link to={`/${user._id}`}>
         <div className="profile-pic-wrapper hover:opacity-70">
           <img  
@@ -38,7 +38,7 @@ const UserWidget = ({ user }) => {
             alt="profile picture" />
         </div>
       </Link>
-      <div>
+      <div className="text-sm">
         <p className="font-medium">
           { user.username }
         </p>

@@ -56,7 +56,7 @@ const PostContextProvider = ({ children }) => {
 
   useEffect(() => {
     async function getPosts() {
-      const res = await fetch("http://localhost:5000/api/posts", {
+      const res = await fetch("/api/posts", {
         method: "GET",
         headers: {
           "Authorization": `Bearer ${token}`

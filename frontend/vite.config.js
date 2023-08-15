@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:5000',
+        target: 'https://energetic-pear-vest.cyclic.cloud/',
         changeOrigin: true,
         secure: false
       },
