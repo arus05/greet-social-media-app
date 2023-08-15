@@ -1,6 +1,6 @@
 import { Form, useActionData, useNavigation } from "react-router-dom";
 import { UserIcon, KeyIcon } from "@heroicons/react/24/solid";
-import backgroundImg from "../assets/LoginPageBG.jpg"
+import backgroundImg from "../assets/loginPageBG.jpg"
 
 export async function action({ request, dispatchUser }) {
   const formData = await request.formData()
