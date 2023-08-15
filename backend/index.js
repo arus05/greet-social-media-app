@@ -17,7 +17,7 @@ const { initializeApp, cert } = require('firebase-admin/app');
 const app = express()
 app.use(cors({
   origin: process.env.FRONTEND_URL,
-  methods: "GET,POST,PUT,DELETE",
+  methods: "GET,POST,PATCH,DELETE",
   allowedHeaders: "Content-Type, Authorization",
 }))
 app.use(express.json()) // parse application/json
