@@ -12,7 +12,6 @@ const { createPost } = require("./controllers/post.js")
 const { signup } = require("./controllers/auth.js")
 const requireAuth = require("./middleware/requireAuth.js")
 const { initializeApp, cert } = require('firebase-admin/app');
-const serviceAccount = require(process.env.FIREBASE_KEY_PATH)
 
 /** CONFIGURATIONS */
 const app = express()
@@ -23,13 +22,13 @@ app.use(cors({
 }))
 app.use(express.json()) // parse application/json
 app.use(express.urlencoded({ extended: true })) // parse application/x-www-form-urlencoded
-// app.use("/assets", express.static(`${__dirname}/public/assets`))
+
+/** FILE STORAGE */
+const serviceAccount = JSON.parse(process.env.FIREBASE_KEY)
 initializeApp({
   credential: cert(serviceAccount),
   storageBucket: 'greet-social-media-app.appspot.com',
 });
-
-/** FILE STORAGE */
 const maxFileSize = 5 * 1024 * 1024
 
 const storage = multer.memoryStorage()
