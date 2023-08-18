@@ -6,4 +6,8 @@ export default function requireAuth(path) {
   if (!token || !user) {
     throw redirect(path)
   }
+  return {
+    user: JSON.parse(user),
+    token: JSON.parse(token)
+  }
 }
