@@ -11,7 +11,7 @@ import Error from "./pages/Error"
 
 function App() {
   const { colorScheme } = useThemeContext()
-  const { token, dispatch: dispatchUser } = useUserContext()
+  const { dispatch: dispatchUser } = useUserContext()
 
   async function homeLoader() {
     requireAuth("/login")
@@ -48,7 +48,6 @@ function App() {
     
     const user = await res.json()
     return user
-
   }
 
   const BrowserRouter = createBrowserRouter(createRoutesFromElements(

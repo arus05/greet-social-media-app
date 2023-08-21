@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { Link, redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   MagnifyingGlassIcon,
   HomeIcon,
@@ -48,7 +48,7 @@ const Navbar = () => {
   return ( 
     <nav className="
       flex flex-col items-center justify-evenly
-      px-10 py-3 gap-6 dark:bg-primary-dark sm:flex-row"
+      px-10 py-3 gap-6 bg-primary dark:bg-primary-dark sm:flex-row"
     >
       {/* MOBILE MENU */}
       <div
@@ -64,11 +64,11 @@ const Navbar = () => {
           <Bars3Icon className="h-6 w-6 text-gray-500" />
         </button>
         {clickedOnBurger &&
-          <div className="absolute top-14 right-0 rounded-lg
+          <div className="absolute top-14 right-0 rounded-lg z-20
             p-5 flex flex-col items-start gap-3
-            bg-primary dark:bg-primary-dark
-            text-text dark:text-text-dark shadow-lg shadow-gray-400 dark:border-2 border-primary-dark 
-            dark:border-primary
+            bg-white dark:bg-primary-dark
+            text-text dark:text-text-dark
+            shadow-xl shadow-gray-300 dark:shadow-none dark:border-dark
           ">
             <div className="flex-center">
               <div
@@ -111,16 +111,16 @@ const Navbar = () => {
       {/* MOBILE MENU */}
       {/* LOGO */}
       <div className="flex-center justify-between md:block">
-        <div className="shrink-0 hover:cursor-pointer"> 
+        <Link to="/" className="shrink-0 hover:cursor-pointer"> 
           <p className="text-xl font-semibold text-secondary drop-shadow-lg">Greet</p>
-        </div>
+        </Link>
       </div>
       {/* LOGO */}
       {/* SEARCH BAR */}
       <div
         className="
           flex-center gap-3 border-2 border-gray-200 rounded-3xl
-          px-2 py-1 flex-1 w-full max-w-[350px]
+          px-2 py-1 flex-1 max-w-[350px]
           md:mr-auto 
           dark:bg-search-dark dark:border-primary-dark
         "
@@ -128,7 +128,7 @@ const Navbar = () => {
         <div>
           <MagnifyingGlassIcon className="h-5 w-5 text-secondary dark:text-text-dark" />
         </div>
-        <div className="text-base text-gray-800 dark:text-white">
+        <div className="text-base text-gray-800 dark:text-white grow">
           <input type="text" placeholder="Search"
             className="rounded-md border-gray-300 w-full"
           />
@@ -172,7 +172,7 @@ const Navbar = () => {
       </div>
       {/* NAV BAR */}
       {/* RIGHT SIDE */}
-      <div className="md:flex-center gap-3 ml-auto hidden">
+      <div className="hidden md:flex-center gap-3 ml-auto">
         {/* LIGHT/DARK MODE */}
         <div className="rounded-full hover:bg-bg-hover dark:hover:bg-bg-hover-dark">
           <button
@@ -200,10 +200,10 @@ const Navbar = () => {
           </div>
           { clickedOnProfile &&
             <div
-                className="absolute py-4 font-semibold top-[60px] right-[0px] text-left
-                overflow-hidden w-[200px] rounded-2xl bg-primary dark:bg-primary-dark
-                text-text dark:text-text-dark shadow-lg border-2 border-primary-dark 
-                dark:border-primary
+                className="absolute py-4 font-semibold top-[60px] right-[0px] text-left z-20
+                overflow-hidden w-[200px] rounded-2xl bg-white dark:bg-primary-dark
+                text-text dark:text-text-dark
+                shadow-xl shadow-gray-300 dark:shadow-none dark:border-dark
             " >
               <ul className="flex flex-col gap-2">
                 <li className="profile-nav-li">
@@ -223,7 +223,8 @@ const Navbar = () => {
                     </Link>
                 </li>
               </ul>
-          </div>}
+            </div>
+          }
         </div>
         {/* PROFILE */}
         {/* USERNAME */}

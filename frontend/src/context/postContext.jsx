@@ -47,16 +47,23 @@ const PostContextProvider = ({ children }) => {
           })
         }
       
+      case "setLoading":
+        return {
+          ...prevState,
+          loading: action.payload
+        }
+      
       default:
         return prevState
     }
   }
-  const [state, dispatch] = useReducer(reducer, { posts: null })
+
+  const [state, dispatch] = useReducer(reducer, { posts: [], loading: false })
   const { token } = useUserContext()
 
   useEffect(() => {
-    console.log(import.meta.env.VITE_API_URL)
     async function getPosts() {
+      dispatch({ type: "setLoading", payload: true})
       const res = await fetch(`${import.meta.env.VITE_API_URL}/api/posts`, {
         method: "GET",
         headers: {
@@ -70,6 +77,7 @@ const PostContextProvider = ({ children }) => {
       else {
         console.log(data.message)
       }
+      dispatch({ type: "setLoading", payload: false})
     }
     if (token) {
       try {
