@@ -10,7 +10,7 @@ const Posts = ({ posts }) => {
       }
       {
         posts.length === 0 &&
-        <div className="text-text dark:text-text-dark">
+        <div className="flex-center justify-center text-text dark:text-text-dark">
             <p>No posts available</p>
         </div>
       }
