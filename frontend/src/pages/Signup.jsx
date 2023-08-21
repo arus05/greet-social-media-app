@@ -153,7 +153,7 @@ const Signup = () => {
 
       </form>
 
-      <div className="absolute w-full h-full top-0 left-0 -z-10 blur-sm">
+      <div className="absolute top-0 bottom-0 left-0 right-0 -z-10 blur-sm">
         <img src={backgroundImg} alt=""
           className="w-full h-full object-cover"
         />
