@@ -42,8 +42,8 @@ const Login = () => {
   const navigation = useNavigation()
 
   return(
-    <div className="min-h-screen flex flex-col items-center justify-center">
-      <Form className="w-[450px] bg-white bg-opacity-70 px-16 py-10 rounded-xl" method="POST" replace>
+    <div className="min-h-screen flex flex-col items-center justify-center p-5">
+      <Form className="w-full max-w-[500px] bg-white bg-opacity-70 px-16 py-10 rounded-xl" method="POST" replace>
         <h2 className="text-2xl font-semibold mb-5">
           Sign In
         </h2>
@@ -100,7 +100,7 @@ const Login = () => {
         </p>
         
       </Form>
-      <div className="absolute w-full h-full top-0 left-0 -z-10 blur-sm">
+      <div className="absolute top-0 bottom-0 left-0 right-0 -z-10 blur-sm">
         <img src={backgroundImg} alt=""
           className="w-full h-full object-cover"
         />

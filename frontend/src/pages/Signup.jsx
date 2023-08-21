@@ -31,12 +31,6 @@ const Signup = () => {
     formData.append("location", location)
     formData.append("profile-picture", profilePicture)
 
-    console.log(username)
-    console.log(email)
-    console.log(password)
-    console.log(location)
-    console.log(profilePicture)
-
     const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/signup`, {
       method: "POST",
       body: formData
