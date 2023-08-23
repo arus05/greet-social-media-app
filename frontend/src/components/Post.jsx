@@ -1,10 +1,10 @@
 import { useRef, useState } from "react";
-import Loading from "../components/Loading"
 import formatDistance from 'date-fns/formatDistance'
 import { useUserContext } from "../hooks/useUserContext";
 import { usePostContext } from "../hooks/usePostContext";
+import Loading from "./Loading"
 import Comments from "./Comments";
-// import { PropTypes } from 'prop-types';
+
 import {
   HeartIcon,
   ChatBubbleLeftIcon,
@@ -17,7 +17,7 @@ import {
   HeartIcon as FilledHeartIcon,
 } from "@heroicons/react/24/solid";
 
-const Post = ({ post }) => {
+const Post = ({ post, setClickedPostImage }) => {
 
   const {
     _id,
@@ -159,11 +159,13 @@ const Post = ({ post }) => {
           {caption}
         </p>
       </div>
-      {postImage && <div href={postImageURL} className="rounded-xl overflow-hidden mb-5 w-full">
-        <a href={postImageURL} rel="noreferrer" target="_blank">
-          <img src={postImageURL} alt="" className="img-fit" />
-        </a>
-      </div>}
+      { postImage &&
+        <div href={postImageURL} className="rounded-xl overflow-hidden mb-5 w-full cursor-pointer">
+          <img src={postImageURL} alt="" className="img-fit"
+            onClick={() => setClickedPostImage(postImageURL)}
+          />
+        </div>
+      }
       <div className="flex-center gap-4">
         <button className="flex-center gap-1" onClick={likePost}>
           {likedPost ? 
@@ -180,6 +182,8 @@ const Post = ({ post }) => {
           <ShareIcon className="post-icon" />
         </button>
       </div>
+
+      {/* COMMENTS */}
       { showComments &&
         <div className="max-h-[200px] w-full h-auto relative overflow-x-hidden
           mt-3 px-1
