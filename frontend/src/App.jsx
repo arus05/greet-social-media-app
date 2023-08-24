@@ -1,4 +1,4 @@
-import { RouterProvider, createBrowserRouter, Route, createRoutesFromElements, redirect } from "react-router-dom"
+import { RouterProvider, createBrowserRouter, Route, createRoutesFromElements, redirect, Navigate } from "react-router-dom"
 import { useThemeContext } from "./hooks/useThemeContext"
 import { useUserContext } from "./hooks/useUserContext"
 import requireAuth from "./utils/requireAuth"
@@ -11,9 +11,14 @@ import Error from "./pages/Error"
 
 function App() {
   const { colorScheme } = useThemeContext()
-  const { dispatch: dispatchUser } = useUserContext()
+  const { user, dispatch: dispatchUser } = useUserContext()
 
-  async function homeLoader() {
+  function layoutLoader() {
+    requireAuth("/login")
+    return null
+  }
+
+  function homeLoader() {
     requireAuth("/login")
     return null
   }
@@ -52,7 +57,7 @@ function App() {
 
   const BrowserRouter = createBrowserRouter(createRoutesFromElements(
     <>
-      <Route path="/" element={<Layout />} errorElement={<Error />} >
+      <Route path="/" element={user ? <Layout /> : <Navigate to="/login"/>} errorElement={<Error />} loader={layoutLoader} >
         <Route index element={<Home />} loader={homeLoader}/>
         <Route path=":userId" element={<Profile />} loader={profileLoader} />
       </Route>

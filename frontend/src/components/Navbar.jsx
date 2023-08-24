@@ -15,20 +15,16 @@ import {
 } from "@heroicons/react/24/outline";
 import { useThemeContext } from "../hooks/useThemeContext"
 import { useUserContext } from "../hooks/useUserContext"
+import { useLogout } from "../hooks/useLogout"
 
 const Navbar = () => {
   const { colorScheme, dispatch: dispatchTheme } = useThemeContext()
-  const { user, dispatch: dispatchUser } = useUserContext()
+  const { user } = useUserContext()
+  const { logout } = useLogout()
   const [clickedOnProfile, setClickedOnProfile] = useState(false)
   const profileMenu = useRef(null)
   const [clickedOnBurger, setClickedOnBurger] = useState(false)
   const burger = useRef(null)
-
-  function logout() {
-    dispatchUser({ type: "logout" })
-    localStorage.removeItem("user")
-    localStorage.removeItem("token")
-  }
 
   function handleClickOnProfile(e) {
     e.stopPropagation

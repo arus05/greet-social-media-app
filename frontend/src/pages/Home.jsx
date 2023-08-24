@@ -40,7 +40,7 @@ const Home = () => {
         {/* MIDDLE */}
         <div className="w-full">
           <CreatePost />
-        <Posts posts={posts} />
+          <Posts posts={posts} />
         </div>
 
         {/* RIGHT */}
