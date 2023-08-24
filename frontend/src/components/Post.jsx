@@ -131,7 +131,7 @@ const Post = ({ post, setClickedPostImage }) => {
     `}>
       <div className="flex-center gap-4 mb-5">
         <div className="profile-pic-wrapper">
-          <img src={profilePictureURL} alt="profile picture" className="img-fit" />
+          <img src={profilePictureURL} alt="profile picture" className="img-fit" loading="lazy"/>
         </div>
         <div>
           <p className="font-medium">
@@ -161,7 +161,7 @@ const Post = ({ post, setClickedPostImage }) => {
       </div>
       { postImage &&
         <div href={postImageURL} className="rounded-xl overflow-hidden mb-5 w-full cursor-pointer">
-          <img src={postImageURL} alt="" className="img-fit"
+          <img src={postImageURL} alt="" className="img-fit" loading="lazy"
             onClick={() => setClickedPostImage(postImageURL)}
           />
         </div>
