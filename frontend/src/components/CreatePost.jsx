@@ -13,13 +13,16 @@ import {
 import { useUserContext } from "../hooks/useUserContext";
 import { usePostContext } from "../hooks/usePostContext"
 
+const MAX_FILE_SIZE_IN_MB = 5
+const MAX_FILE_SIZE = MAX_FILE_SIZE_IN_MB*1024*1024
 
 const CreatePost = () => {
   const fileInput = useRef(null)
   const [postImage, setPostImage] = useState(null)
   const [caption, setCaption] = useState("")
   const [loading, setLoading] = useState("idle")
-  const [error, setError] = useState(null)
+  const [error, setError] = useState([])
+  const [postImageError, setPostImageError] = useState(null)
   const { user, token } = useUserContext()
   const { dispatch: dispatchPost } = usePostContext()
 
@@ -49,6 +52,16 @@ const CreatePost = () => {
     setPostImage(null)
     setCaption("")
     setLoading("idle")
+  }
+
+  function handlePostImageUpload(e) {
+    setPostImageError(null)
+    setPostImage(null)
+    const postImage = e.target.files[0]
+    if (postImage.size > MAX_FILE_SIZE) {
+      return setPostImageError({ message: "File size too large "})
+    }
+    setPostImage(postImage)
   }
 
   return (
@@ -96,6 +109,10 @@ const CreatePost = () => {
             </button>
           </div>
         }
+        {
+          !postImage && postImageError && 
+          <p className="text-red-500 w-full text-center font-medium">{postImageError.message}</p>
+        }
       </div>
       <hr className="w-full h-[2px] bg-gray-200 my-3" />
       <ul className="flex-center gap-3 flex-wrap justify-between dark:text-text-dark">
@@ -108,7 +125,7 @@ const CreatePost = () => {
             <p>Image</p>
           </button>
           <input type="file" name="post-image" className="hidden" ref={fileInput} accept=".jpg,.png,.pdf"
-            onChange={(e) => setPostImage(e.target.files[0])} />
+            onChange={handlePostImageUpload} />
         </li>
         <li className="create-post-li">
           <button className="create-post-btn" onClick={(e) => e.preventDefault()}>

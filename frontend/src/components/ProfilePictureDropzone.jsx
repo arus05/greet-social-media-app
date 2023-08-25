@@ -2,6 +2,9 @@ import { useCallback, useMemo } from "react";
 import { useDropzone } from "react-dropzone";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 
+const MAX_FILE_SIZE_IN_MB = 5
+const MAX_FILE_SIZE = MAX_FILE_SIZE_IN_MB*1024*1024
+
 const baseStyle = {
   flex: 1,
   display: 'flex',
@@ -42,7 +45,7 @@ const ProfilePictureDropzone = ({ profilePicture, setProfilePicture }) => {
     isDragAccept,
     isDragReject,
     isDragActive
-  } = useDropzone({ onDrop, maxFiles, accept })
+  } = useDropzone({ onDrop, maxFiles, accept, maxSize:MAX_FILE_SIZE })
 
   const style = useMemo(() => ({
     ...baseStyle,
@@ -62,13 +65,13 @@ const ProfilePictureDropzone = ({ profilePicture, setProfilePicture }) => {
         <div className="flex-center gap-3">
           <p>{profilePicture.name}</p>
           <button onClick={(e) => {
-            e.stopPropagation
+            e.stopPropagation()
             setProfilePicture(null)
           }}>
             <XMarkIcon className="h-6 w-6 text-red-500 hover:scale-110 hover:drop-shadow-lg shadow-gray-400 cursor-pointer" />
           </button>
         </div> :
-        <p>Drag and drop your profile picture here, or click to select files</p>
+        <p>Drag and drop your profile picture here, or click to select files (MAX {MAX_FILE_SIZE_IN_MB} MB)</p>
       }
     </div>
   );
