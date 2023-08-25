@@ -62,8 +62,8 @@ const CreatePost = () => {
     >
       <div>
         <div className="flex-center gap-4 mb-2">
-          <div className="h-12 w-12 rounded-full overflow-hidden">
-            <img src={user.profilePicture} alt="" className="img-fit" />
+          <div className="h-12 w-12 rounded-full overflow-hidden shrink-0">
+            <img src={user.profilePicture} alt="profile picture" className="img-fit" />
           </div>
           <div className="flex-center flex-grow bg-gray-200 rounded-2xl px-2
                 dark:bg-search-dark dark:text-text-dark placeholder:dark:text-primary-dark

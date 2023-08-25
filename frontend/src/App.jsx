@@ -74,7 +74,7 @@ function App() {
 
   return (
     <div id="app"
-      className={`app ${colorScheme === "dark" ? "dark" : ""} font-sans overflow-x-hidden`}
+      className={`app ${colorScheme === "dark" ? "dark" : ""} font-sans`}
     >
       <RouterProvider router={BrowserRouter} />
     </div>

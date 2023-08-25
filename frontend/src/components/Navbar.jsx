@@ -43,7 +43,7 @@ const Navbar = () => {
 
   return ( 
     <nav className="
-      flex flex-col items-center justify-evenly
+      flex flex-col items-center justify-evenly sticky top-0
       px-10 py-3 gap-6 bg-primary dark:bg-primary-dark sm:flex-row"
     >
       {/* MOBILE MENU */}
@@ -137,31 +137,31 @@ const Navbar = () => {
           <li>
             <Link to="/" className="nav-li">
               <HomeIcon className="nav-icon" />
-              <p className="hidden xl:block">Homepage</p>
+              <p className="nav-text">Homepage</p>
             </Link> 
           </li>
           <li>
             <a href="#" className="nav-li">
               <UsersIcon className="nav-icon" />
-              <p className="hidden xl:block">Connections</p>
+              <p className="nav-text">Connections</p>
             </a> 
           </li>
           <li>
             <a href="#" className="nav-li">
               <ChatBubbleOvalLeftEllipsisIcon className="nav-icon" />
-              <p className="hidden xl:block">Messages</p>
+              <p className="nav-text">Messages</p>
             </a> 
           </li>
           <li>
             <a href="#" className="nav-li">
               <BellIcon className="nav-icon" />
-              <p className="hidden xl:block">Notifications</p>
+              <p className="nav-text">Notifications</p>
             </a> 
           </li>
           <li>
             <a href="#" className="nav-li">
               <WrenchScrewdriverIcon className="nav-icon" />
-              <p className="hidden xl:block">Tools</p>
+              <p className="nav-text">Tools</p>
             </a> 
           </li>
         </ul>

@@ -1,18 +1,15 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
-import { useThemeContext } from "../hooks/useThemeContext";
 
 const Layout = () => {
-  const { colorScheme } = useThemeContext()
   return (
-    <>
+    <div className="bg-primary dark:bg-primary-dark pt-3">
       <Navbar />
-      <div className={`min-h-screen overflow-y-auto overflow-x-hidden w-screen
-        ${colorScheme === "dark" ? "bg-primary-dark" : "bg-primary"}`}
+      <div className="min-h-screen overflow-y-auto overflow-x-hidden w-screen"
       >
         <Outlet />
       </div>
-    </>
+    </div>
   )
 }
  

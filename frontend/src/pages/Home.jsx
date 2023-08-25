@@ -25,7 +25,7 @@ const Home = () => {
   return (
       <main
         className="
-          py-3 px-5 grid place-content-evenly gap-7
+          py-3 px-5 grid place-content-evenly gap-7 bg-primary dark:bg-primary-dark
           grid-cols-[minmax(0,500px)] 
           md:grid-cols-[475px,minmax(0px,350px)]
           lg:grid-cols-[minmax(0,350px),550px,minmax(150px,350px)]

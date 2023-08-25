@@ -1,8 +1,11 @@
+const defaultProfilePicture = "https://firebasestorage.googleapis.com/v0/b/greet-social-media-app.appspot.com/o/profilePicture%2Fkyojuro%20rengoku2.png?alt=media&token=ad58908c-0dc6-4682-95e4-a8dd63610dc0"
+const path = require("path")
 const mongoose = require("mongoose")
 const User = require("../models/User")
 const validator = require("validator")
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
+const { getStorage, getDownloadURL } = require("firebase-admin/storage")
 
 async function signup(req, res) {
   try {
@@ -12,11 +15,30 @@ async function signup(req, res) {
       password,
       location
     } = req.body
-    const defaultProfilePicture = newURL = "https://firebasestorage.googleapis.com/v0/b/greet-social-media-app.appspot.com/o/profilePicture%2Fkyojuro%20rengoku2.png?alt=media&token=ad58908c-0dc6-4682-95e4-a8dd63610dc0"
-    const profilePicture = req.file?.filename || defaultProfilePicture
+    let profilePicture = defaultProfilePicture
   
     /** FIELD VERIFICATION */
     await verifyFieldsSignup({ username, email, password, location })
+
+    /** UPLOAD IMAGE TO FIREBASE */
+    if (req.file) {
+      /** CREATE A UNIQUE FILE NAME */
+      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+      const extension = path.extname(req.file.originalname)
+      const filename = `${req.file.fieldname}-${uniqueSuffix}${extension}`
+      
+      /** UPLOAD IMAGE TO FIREBASE */
+      const fileBuffer = req.file.buffer
+      const bucket = getStorage().bucket();
+      const fileRef = bucket.file(`profilePicture/${filename}`);
+
+      await fileRef.save(fileBuffer, {
+        metadata: {
+          contentType: req.file.mimetype,
+        },
+      });
+      profilePicture = await getDownloadURL(fileRef)
+    }
 
     /** PASSWORD ENCRYPTION */
     const hash = await encryptPassword(password)
@@ -37,6 +59,7 @@ async function signup(req, res) {
 
     res.status(201).json({ user: newUser, token })
   } catch (err) {
+    console.log(err)
     res.status(400).json({ message: err.message })
   }
   
