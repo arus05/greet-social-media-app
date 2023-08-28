@@ -66,25 +66,18 @@ const CreatePost = () => {
 
   return (
     <form
-      className="
-        p-4 w-full bg-white rounded-xl mb-6 shadow-md shadow-gray-300
-         dark:bg-primary-dark dark:border-dark dark:shadow-none
-      "
+      className="w-full p-4 mb-6 bg-white shadow-md  rounded-xl shadow-gray-300 dark:bg-primary-dark dark:border-dark dark:shadow-none"
       onSubmit={handleSubmit}
       autoComplete="off"
     >
       <div>
-        <div className="flex-center gap-4 mb-2">
-          <div className="h-12 w-12 rounded-full overflow-hidden shrink-0">
+        <div className="gap-4 mb-2 flex-center">
+          <div className="w-12 h-12 overflow-hidden rounded-full shrink-0">
             <img src={user.profilePicture} alt="profile picture" className="img-fit" />
           </div>
-          <div className="flex-center flex-grow bg-gray-200 rounded-2xl px-2
-                dark:bg-search-dark dark:text-text-dark placeholder:dark:text-primary-dark
-          ">
+          <div className="flex-grow px-2 bg-gray-200 flex-center rounded-2xl dark:bg-search-dark dark:text-text-dark placeholder:dark:text-primary-dark ">
             <input type="text" placeholder="Share something..."
-              className="
-                px-1 py-3 w-full
-              "
+              className="w-full px-1 py-3 "
               name="caption"
               value={caption}
               onChange={(e) => {setCaption(e.target.value)}}
@@ -93,35 +86,35 @@ const CreatePost = () => {
               loading === "submitting" ? 
                 <Loading /> :
                 (caption.length === 0 ?
-                <FaceSmileIcon className="h-6 w-6 text-gray-500 dark:text-primary-dark" /> :
+                <FaceSmileIcon className="w-6 h-6 text-gray-500 dark:text-primary-dark" /> :
                   <button>
-                    <PaperAirplaneIcon className="h-6 w-6 text-secondary"/>
+                    <PaperAirplaneIcon className="w-6 h-6 text-secondary"/>
                   </button>
                 )
             }
           </div>
         </div>
         {postImage &&
-          <div className=" flex-center gap-3 text-text-subtle dark:text-text-subtle-dark">
+          <div className="gap-3  flex-center text-text-subtle dark:text-text-subtle-dark">
             <p>Uploaded Image: {postImage?.name}</p>
             <button onClick={() => setPostImage(null)}>
-             <XMarkIcon className="h-6 w-6 text-red-500" />
+             <XMarkIcon className="w-6 h-6 text-red-500" />
             </button>
           </div>
         }
         {
           !postImage && postImageError && 
-          <p className="text-red-500 w-full text-center font-medium">{postImageError.message}</p>
+          <p className="w-full font-medium text-center text-red-500">{postImageError.message}</p>
         }
       </div>
       <hr className="w-full h-[2px] bg-gray-200 my-3" />
-      <ul className="flex-center gap-3 flex-wrap justify-between dark:text-text-dark">
+      <ul className="flex-wrap justify-between gap-3 flex-center dark:text-text-dark">
         <li className="create-post-li">
           <button className="create-post-btn" onClick={(e) => {
             e.preventDefault()
             fileInput.current.click()
           }}>
-            <PhotoIcon className="h-6 w-6 text-secondary" />
+            <PhotoIcon className="w-6 h-6 text-secondary" />
             <p>Image</p>
           </button>
           <input type="file" name="post-image" className="hidden" ref={fileInput} accept=".jpg,.png,.pdf"
@@ -129,25 +122,25 @@ const CreatePost = () => {
         </li>
         <li className="create-post-li">
           <button className="create-post-btn" onClick={(e) => e.preventDefault()}>
-            <VideoCameraIcon className="h-6 w-6 text-secondary" />
+            <VideoCameraIcon className="w-6 h-6 text-secondary" />
             <p>Video</p>
           </button>
         </li>
         <li className="create-post-li">
           <button className="create-post-btn" onClick={(e) => e.preventDefault()}>
-            <PaperClipIcon className="h-6 w-6 text-secondary" />
+            <PaperClipIcon className="w-6 h-6 text-secondary" />
             <p>Attachment</p>
           </button>
         </li>
         <li className="create-post-li">
           <button className="create-post-btn" onClick={(e) => e.preventDefault()}>
-            <HashtagIcon className="h-6 w-6 text-secondary" />
+            <HashtagIcon className="w-6 h-6 text-secondary" />
             <p>Hashtag</p>
           </button>
         </li>
         <li className="create-post-li">
           <button className="create-post-btn" onClick={(e) => e.preventDefault()}>
-            <AtSymbolIcon className="h-6 w-6 text-secondary" />
+            <AtSymbolIcon className="w-6 h-6 text-secondary" />
             <p>Mention</p>
           </button>
         </li>
